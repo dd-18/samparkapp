@@ -7,12 +7,6 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Text("data"),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Handle button press
-        },
-        child: Icon(Icons.add),
-      ),
     );
   }
 }
