@@ -6,7 +6,13 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("data"), 
+      body: Text("data"),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Handle button press
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
