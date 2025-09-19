@@ -6,7 +6,11 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("data"),
+      appBar: AppBar(
+        title: Text("Sampark App"),
+        centerTitle: true,
+      ),
+
     );
   }
 }
