@@ -6,6 +6,8 @@ var lightTheme = ThemeData();
 var darkTheme = ThemeData(
   brightness: Brightness.dark,
   useMaterial3: true,
+
+
   colorScheme: ColorScheme.dark(
     primary: dPrimaryColor,
     onPrimary: dOnBackgroundColor,
@@ -33,6 +35,18 @@ var darkTheme = ThemeData(
       color: dOnBackgroundColor,
       fontFamily: "Poppins",
       fontWeight: FontWeight.w600,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 18,
+      color: dOnBackgroundColor,
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w500,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 15,
+      color: dOnBackgroundColor,
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w500,
     ),
     labelLarge: TextStyle(
       fontSize: 15,

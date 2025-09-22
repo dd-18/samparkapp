@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:samparkapp/Config/PagePath.dart';
 import 'package:samparkapp/Config/Theme.dart';
 import 'package:samparkapp/Pages/WelcomePage/WelcomePage.dart';
-import 'Pages/SplashPage/SplashPage.dart';
 
 void main() {
   runApp(const MyApp());
