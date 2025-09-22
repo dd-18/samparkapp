@@ -5,6 +5,17 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.arrow_back_ios_new),
+        title: Column(
+          children: [
+            Text('Flutter Dev',style: Theme.of(context).textTheme.bodyLarge),
+            Text('Online', style: Theme.of(context).textTheme.labelSmall),
+          ],
+        ),
+      ),
+      body: SafeArea(child: Column()),
+    );
   }
 }
