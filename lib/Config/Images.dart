@@ -10,4 +10,8 @@ class AssetsImage{
   static const appIconSVG = "$iconsPath/appicon.svg";
   static const connectIconSVG = "$iconsPath/connect.svg";
   static const plugIconSVG = "$iconsPath/plug.svg";
+
+  static const chatStatusSVG = "$iconsPath/chatStatus.svg";
+
+
 }

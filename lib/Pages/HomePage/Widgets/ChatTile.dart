@@ -24,18 +24,21 @@ class ChatTile extends StatelessWidget {
         Get.toNamed("/chatPage");
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 12),
+        height: 70,
+        margin: EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(5.0),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(imageUrl, width: 70),
-              SizedBox(width: 15),
+              Image.asset(imageUrl, width: 50),
+              SizedBox(width: 12),
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(name, style: Theme.of(context).textTheme.bodyLarge),

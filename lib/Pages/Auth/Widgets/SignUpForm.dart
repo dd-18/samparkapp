@@ -51,7 +51,7 @@ class SignUpForm extends StatelessWidget {
           ),
         ),
         SizedBox(height: 60),
-        PrimaryButton(btnName: "SIGNUP",),
+        PrimaryButton(btnName: "SIGNUP",icon: Icons.person,),
       ],
     );
   }
