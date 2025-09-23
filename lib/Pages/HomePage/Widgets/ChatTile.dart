@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../Config/Images.dart';
 
 class ChatTile extends StatelessWidget {
   final String name;
