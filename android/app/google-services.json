@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "400128433414",
+    "project_id": "myddchatapp",
+    "storage_bucket": "myddchatapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400128433414:android:ac1011898686ce52d51287",
+        "android_client_info": {
+          "package_name": "com.example.samparkapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGAqFsZReArPCY7dkd-aNDDmahpEInE-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

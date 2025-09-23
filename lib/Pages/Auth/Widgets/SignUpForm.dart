@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../Controller/AuthController.dart';
 import '../../../Widgets/PrimaryButton.dart';
 
 class SignUpForm extends StatelessWidget {
@@ -7,9 +9,14 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController name = TextEditingController();
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
+    AuthController authController = Get.put(AuthController());
     return Column(
       children: [
         TextField(
+          controller: name,
           decoration: InputDecoration(
             hintText: "Name",
             hintStyle: Theme.of(context).textTheme.labelLarge,
@@ -19,11 +26,15 @@ class SignUpForm extends StatelessWidget {
             ),
             fillColor: Theme.of(context).colorScheme.surface,
             filled: true,
-            border: OutlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.circular(10)),
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
         SizedBox(height: 20),
         TextField(
+          controller: email,
           decoration: InputDecoration(
             hintText: "Email",
             hintStyle: Theme.of(context).textTheme.labelLarge,
@@ -33,11 +44,15 @@ class SignUpForm extends StatelessWidget {
             ),
             fillColor: Theme.of(context).colorScheme.surface,
             filled: true,
-            border: OutlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.circular(10)),
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
         SizedBox(height: 20),
         TextField(
+          controller: password,
           decoration: InputDecoration(
             hintText: "Password",
             hintStyle: Theme.of(context).textTheme.labelLarge,
@@ -47,11 +62,24 @@ class SignUpForm extends StatelessWidget {
             ),
             fillColor: Theme.of(context).colorScheme.surface,
             filled: true,
-            border: OutlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.circular(10)),
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
         SizedBox(height: 60),
-        PrimaryButton(btnName: "SIGNUP",icon: Icons.person,),
+        Obx(
+          () => authController.isLoading.value == true
+              ? CircularProgressIndicator()
+              : PrimaryButton(
+                  btnName: "SIGNUP",
+                  icon: Icons.person,
+                  onTap: () {
+                    authController.createUser(email.text, password.text);
+                  },
+                ),
+        ),
       ],
     );
   }
