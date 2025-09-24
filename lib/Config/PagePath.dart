@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:samparkapp/Pages/ContactPage/ContactPage.dart';
 
 import '../Pages/Auth/AuthPage.dart';
 import '../Pages/Chat/ChatPage.dart';
@@ -30,6 +31,11 @@ var pagePath = [
   GetPage(
     name: "/updateProfilePage",
     page: () => UserUpdateProfile(),
+    transition: Transition.rightToLeftWithFade,
+  ),
+  GetPage(
+    name: "/contactPage",
+    page: () => ContactPage(),
     transition: Transition.rightToLeftWithFade,
   ),
 ];
