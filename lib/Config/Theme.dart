@@ -7,9 +7,7 @@ var darkTheme = ThemeData(
   brightness: Brightness.dark,
   useMaterial3: true,
 
-  appBarTheme: AppBarTheme(
-    backgroundColor: dContainerColor,
-  ),
+  appBarTheme: AppBarTheme(backgroundColor: dContainerColor),
 
   colorScheme: ColorScheme.dark(
     primary: dPrimaryColor,

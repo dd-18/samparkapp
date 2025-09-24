@@ -6,7 +6,9 @@ import 'package:samparkapp/Pages/HomePage/Widgets/TabBar.dart';
 
 import '../../Config/Images.dart';
 import '../../Config/Strings.dart';
+import '../../Controller/ImagePickerController.dart';
 import '../../Controller/ProfileController.dart';
+import '../ProfilePage/ProfilePage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +22,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 3, vsync: this);
     ProfileController profileController = Get.put(ProfileController());
+    ImagePickerController imagePickerController = Get.put(
+      ImagePickerController(),
+    );
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -36,7 +41,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             IconButton(onPressed: () {}, icon: Icon(Icons.search)),
             IconButton(
               onPressed: () {
-                Get.toNamed("/profilePage");
+                // Get.toNamed("/profilePage");
+                Get.to(ProfilePage());
               },
               icon: Icon(Icons.more_vert_rounded),
             ),
