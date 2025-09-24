@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import '../Pages/Auth/AuthPage.dart';
 import '../Pages/Chat/ChatPage.dart';
 import '../Pages/HomePage/HomePage.dart';
-import '../Pages/Profile/ProfilePage.dart';
-import '../Pages/Profile/UpdateProfile.dart';
+import '../Pages/UserProfile/UserProfilePage.dart';
+import '../Pages/UserProfile/UserUpdateProfile.dart';
 
 var pagePath = [
   GetPage(
@@ -24,11 +24,12 @@ var pagePath = [
   ),
   GetPage(
     name: "/profilePage",
-    page: () => ProfilePage(),
+    page: () => UserProfilePage(),
     transition: Transition.rightToLeftWithFade,
-  ),GetPage(
+  ),
+  GetPage(
     name: "/updateProfilePage",
-    page: () => UpdateProfile(),
+    page: () => UserUpdateProfile(),
     transition: Transition.rightToLeftWithFade,
   ),
 ];

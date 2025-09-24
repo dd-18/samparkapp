@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+
+import '../Models/UserModel.dart';
 
 class AuthController extends GetxController {
   RxBool isLoading = false.obs;
   final auth = FirebaseAuth.instance;
+  final db = FirebaseFirestore.instance;
 
   //login function
   Future<void> login(String email, String password) async {
@@ -25,14 +29,23 @@ class AuthController extends GetxController {
   }
 
   //register function
-  Future<void> createUser(String email, String password) async {
+  Future<void> createUser(String email, String password, String name) async {
     isLoading.value = true;
+    if (email.isEmpty || !email.contains('@')) {
+      // Show error to user
+      Get.snackbar('Error', 'Invalid email address');
+      print("Invalid email address");
+      isLoading.value = false;
+      return;
+    }
     try {
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await initUser(email, name);
       print("Account Created Successfully ");
+      Get.offAllNamed("/homePage");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         Get.snackbar('Error', 'The password provided is too weak.');
@@ -43,5 +56,27 @@ class AuthController extends GetxController {
       print(e);
     }
     isLoading.value = false;
+  }
+
+  //logout function
+  Future<void> logoutUser() async {
+    await auth.signOut();
+    Get.offAllNamed("/authPage");
+  }
+
+  Future<void> initUser(String email, String name) async {
+    var newUser = UserModel(
+      email: email,
+      name: name,
+      id: auth.currentUser!.uid,
+    );
+    try {
+      await db
+          .collection("users")
+          .doc(auth.currentUser!.uid)
+          .set(newUser.toJson());
+    } catch (ex) {
+      print(ex);
+    }
   }
 }

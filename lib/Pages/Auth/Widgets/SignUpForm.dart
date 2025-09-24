@@ -76,7 +76,15 @@ class SignUpForm extends StatelessWidget {
                   btnName: "SIGNUP",
                   icon: Icons.person,
                   onTap: () {
-                    authController.createUser(email.text, password.text);
+                    if (password.text.isEmpty || password.text.length < 6) {
+                      Get.snackbar('Error', 'Password must be at least 6 characters long');
+                      return;
+                    }
+                    authController.createUser(
+                      email.text, // Corrected order
+                      password.text,
+                      name.text,  // Corrected order
+                    );
                   },
                 ),
         ),
