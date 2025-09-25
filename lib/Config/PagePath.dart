@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:samparkapp/Pages/ContactPage/ContactPage.dart';
 
 import '../Pages/Auth/AuthPage.dart';
-import '../Pages/Chat/ChatPage.dart';
 import '../Pages/HomePage/HomePage.dart';
 import '../Pages/UserProfile/UserProfilePage.dart';
 import '../Pages/UserProfile/UserUpdateProfile.dart';
@@ -18,11 +17,11 @@ var pagePath = [
     page: () => HomePage(),
     transition: Transition.rightToLeftWithFade,
   ),
-  GetPage(
-    name: "/chatPage",
-    page: () => ChatPage(),
-    transition: Transition.rightToLeftWithFade,
-  ),
+  // GetPage(
+  //   name: "/chatPage",
+  //   page: () => ChatPage(),
+  //   transition: Transition.rightToLeftWithFade,
+  // ),
   GetPage(
     name: "/profilePage",
     page: () => UserProfilePage(),

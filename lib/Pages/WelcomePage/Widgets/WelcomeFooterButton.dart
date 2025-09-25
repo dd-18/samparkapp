@@ -14,7 +14,8 @@ class WelcomeFooterButton extends StatelessWidget {
     return Column(
       children: [
         SlideAction(
-          onSubmit: () {
+          onSubmit: () async {
+            await Future.delayed(Duration(seconds: 2));
             Get.offAllNamed("/authPage");
           },
           innerColor: Theme.of(context).colorScheme.primary,

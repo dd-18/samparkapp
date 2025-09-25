@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Config/Images.dart';
 import '../../Controller/AuthController.dart';
-import '../../Controller/ProfileController.dart';
+
 import 'Widgets/UserInfo.dart';
 
 class UserProfilePage extends StatelessWidget {

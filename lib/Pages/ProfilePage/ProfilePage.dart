@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../Controller/AuthController.dart';
 import '../../Controller/ImagePickerController.dart';
 import '../../Controller/ProfileController.dart';
 import '../../Widgets/PrimaryButton.dart';
@@ -13,6 +14,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RxBool isEdit = false.obs;
+    AuthController authController = Get.put(AuthController());
     ProfileController profileController = Get.put(ProfileController());
     ImagePickerController imagePickerController = Get.put(
       ImagePickerController(),
@@ -35,7 +37,17 @@ class ProfilePage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text("Profile")),
+        appBar: AppBar(
+          title: Text("Profile"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                authController.logoutUser();
+              },
+              icon: Icon(Icons.logout_rounded),
+            ),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
