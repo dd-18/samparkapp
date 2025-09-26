@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:samparkapp/Controller/ContactController.dart';
 import 'package:samparkapp/Pages/HomePage/Widgets/ChatList.dart';
 import 'package:samparkapp/Pages/HomePage/Widgets/TabBar.dart';
 
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     ImagePickerController imagePickerController = Get.put(
       ImagePickerController(),
     );
+    ContactController contactController = Get.put(ContactController());
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -38,10 +40,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: SvgPicture.asset(AssetsImage.appIconSVG),
           ),
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.search)),
             IconButton(
               onPressed: () {
-                // Get.toNamed("/profilePage");
+                contactController.getChatRoomList();
+              },
+              icon: Icon(Icons.search),
+            ),
+            IconButton(
+              onPressed: () {
                 Get.to(ProfilePage());
               },
               icon: Icon(Icons.more_vert_rounded),

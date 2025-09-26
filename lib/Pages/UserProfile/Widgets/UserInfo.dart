@@ -5,7 +5,20 @@ import '../../../Config/Images.dart';
 import '../../../Controller/ProfileController.dart';
 
 class UserInfo extends StatelessWidget {
-  const UserInfo({super.key});
+  final String profileImage;
+  final String userName;
+  final String userEmail;
+  final String? phoneNumber;
+  final String? about;
+
+  const UserInfo({
+    super.key,
+    required this.profileImage,
+    required this.userName,
+    required this.userEmail,
+    this.phoneNumber,
+    this.about,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +44,7 @@ class UserInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      profileController.currentUser.value.name ?? "User",
+                      userName,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -40,7 +53,7 @@ class UserInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      profileController.currentUser.value.email ?? "Email",
+                      userEmail,
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ],

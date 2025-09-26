@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:samparkapp/Pages/ContactPage/ContactPage.dart';
 
+import '../Models/UserModel.dart';
 import '../Pages/Auth/AuthPage.dart';
 import '../Pages/HomePage/HomePage.dart';
 import '../Pages/UserProfile/UserProfilePage.dart';
@@ -24,7 +25,7 @@ var pagePath = [
   // ),
   GetPage(
     name: "/profilePage",
-    page: () => UserProfilePage(),
+    page: () => UserProfilePage(userModel: UserModel()),
     transition: Transition.rightToLeftWithFade,
   ),
   GetPage(

@@ -6,6 +6,7 @@ import '../../Config/Images.dart';
 import '../../Config/Strings.dart';
 import '../../Controller/ChatController.dart';
 import '../../Controller/ContactController.dart';
+import '../../Controller/ProfileController.dart';
 import '../Chat/ChatPage.dart';
 import '../HomePage/Widgets/ChatTile.dart';
 import 'Widgets/NewContactTile.dart';
@@ -18,6 +19,7 @@ class ContactPage extends StatelessWidget {
     RxBool isSearchEnabled = false.obs;
     ContactController contactController = Get.put(ContactController());
     ChatController chatController = Get.put(ChatController());
+    ProfileController profileController = Get.put(ProfileController());
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -73,13 +75,19 @@ class ContactPage extends StatelessWidget {
                   children: contactController.userList
                       .map(
                         (e) => InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onTap: () {
                             Get.to(() => ChatPage(userModel: e));
                           },
                           child: ChatTile(
                             name: "${e.name}",
                             lastChat: e.about ?? "Hey Buddy, Ready to Chat",
-                            lastTime: '',
+                            lastTime:
+                                e.email ==
+                                    profileController.currentUser.value.email
+                                ? "You"
+                                : "",
                             imageUrl: e.profileImage ?? AssetsImage.boypic,
                           ),
                         ),

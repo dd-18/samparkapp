@@ -70,6 +70,8 @@ class ProfilePage extends StatelessWidget {
                               Obx(
                                 () => isEdit.value
                                     ? InkWell(
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           // Assign directly to Rxn<String>.value
                                           imagePath.value =

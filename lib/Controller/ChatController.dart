@@ -1,15 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:samparkapp/Controller/ProfileController.dart';
+import 'package:samparkapp/Models/UserModel.dart';
 import 'package:uuid/uuid.dart';
 import '../Models/ChatModel.dart';
+import '../Models/ChatRoomModel.dart';
 
 class ChatController extends GetxController {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   RxBool isLoading = false.obs;
   var uuid = Uuid();
+  RxString selectedImagePath = ''.obs;
   ProfileController controller = Get.put(ProfileController());
 
   String getRoomId(String targetUserId) {
@@ -21,11 +25,41 @@ class ChatController extends GetxController {
     }
   }
 
-  Future<void> sendMessage(String targetUserId, String message) async {
+  UserModel getSender(UserModel currentUser, UserModel targetUser) {
+    String currentUserId = currentUser.id!;
+    String targetUserId = targetUser.id!;
+    if (currentUserId[0].codeUnitAt(0) > targetUserId[0].codeUnitAt(0)) {
+      return currentUser;
+    } else {
+      return targetUser;
+    }
+  }
+
+  UserModel getReciver(UserModel currentUser, UserModel targetUser) {
+    String currentUserId = currentUser.id!;
+    String targetUserId = targetUser.id!;
+    if (currentUserId[0].codeUnitAt(0) > targetUserId[0].codeUnitAt(0)) {
+      return targetUser;
+    } else {
+      return currentUser;
+    }
+  }
+
+  Future<void> sendMessage(
+    String targetUserId,
+    String message,
+    UserModel targetUser,
+  ) async {
     isLoading.value = true;
     String chatId = uuid.v6();
 
     String roomId = getRoomId(targetUserId);
+    DateTime timestamp = DateTime.now();
+    String nowTime = DateFormat('hh:mm a').format(timestamp);
+
+    UserModel sender = getSender(controller.currentUser.value, targetUser);
+    UserModel receiver = getReciver(controller.currentUser.value, targetUser);
+
     var newChat = ChatModel(
       id: chatId,
       senderName: controller.currentUser.value.name,
@@ -35,6 +69,17 @@ class ChatController extends GetxController {
       timestamp: DateTime.now().toString(),
       readStatus: 'unread',
     );
+
+    var roomDetails = ChatRoomModel(
+      id: roomId,
+      lastMessage: message,
+      lastMessageTimestamp: nowTime,
+      timestamp: DateTime.now().toString(),
+      sender: sender,
+      receiver: receiver,
+      unReadMessNo: 0,
+    );
+
     try {
       await db
           .collection("chats")
@@ -42,6 +87,7 @@ class ChatController extends GetxController {
           .collection("messages")
           .doc(chatId)
           .set(newChat.toJson());
+      await db.collection("chats").doc(roomId).set(roomDetails.toJson());
     } catch (e) {
       print(e);
     }

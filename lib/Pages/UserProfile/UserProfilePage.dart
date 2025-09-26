@@ -3,14 +3,18 @@ import 'package:get/get.dart';
 
 import '../../Controller/AuthController.dart';
 
+import '../../Controller/ProfileController.dart';
+import '../../Models/UserModel.dart';
 import 'Widgets/UserInfo.dart';
 
 class UserProfilePage extends StatelessWidget {
-  const UserProfilePage({super.key});
+  final UserModel userModel;
+  const UserProfilePage({super.key, required this.userModel});
 
   @override
   Widget build(BuildContext context) {
     AuthController authController = Get.put(AuthController());
+    ProfileController profileController = Get.put(ProfileController());
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -28,7 +32,13 @@ class UserProfilePage extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              UserInfo(),
+              UserInfo(
+                profileImage: userModel.profileImage ?? "",
+                userName: userModel.name ?? "User",
+                userEmail: userModel.email ?? "",
+                phoneNumber: userModel.phoneNumber ?? "",
+                about: userModel.about ?? "",
+              ),
               Spacer(),
               ElevatedButton(
                 onPressed: () {

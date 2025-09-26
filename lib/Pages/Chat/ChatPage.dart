@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:samparkapp/Config/Images.dart';
 import 'package:samparkapp/Models/UserModel.dart';
+import 'package:samparkapp/Pages/Chat/Widgets/TypeMessage.dart';
+import 'package:samparkapp/Pages/UserProfile/UserProfilePage.dart';
 
 import '../../Controller/ChatController.dart';
 import '../../Controller/ProfileController.dart';
@@ -21,19 +23,40 @@ class ChatPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: Image.asset(AssetsImage.boypic),
+          leading: InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () {
+              Get.to(UserProfilePage(userModel: userModel));
+            },
+            child: Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Image.asset(userModel.profileImage ?? AssetsImage.boypic),
+            ),
           ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                userModel.name ?? "User",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              Text('Online', style: Theme.of(context).textTheme.labelSmall),
-            ],
+          title: InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () {
+              Get.to(UserProfilePage(userModel: userModel));
+            },
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      userModel.name ?? "User",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    Text(
+                      'Online',
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           actions: [
             IconButton(onPressed: () {}, icon: Icon(Icons.videocam)),
@@ -42,134 +65,82 @@ class ChatPage extends StatelessWidget {
           ],
         ),
         body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(10), // Keep padding for the ListView
-                  child: StreamBuilder<List<ChatModel>>(
-                    stream: chatController.getMessages(userModel.id!),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(child: Text('No messages yet.'));
-                      } else {
-                        return ListView.builder(
-                          reverse: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            DateTime timestamp = DateTime.parse(
-                              snapshot.data![index].timestamp!,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              bottom: 10,
+              left: 10,
+              right: 10,
+              top: 10,
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Stack(
+                    children: [
+                      StreamBuilder<List<ChatModel>>(
+                        stream: chatController.getMessages(userModel.id!),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
                             );
-                            String formattedTime = DateFormat(
-                              'hh:mm a',
-                            ).format(timestamp);
-                            return ChatBubbles(
-                              message: snapshot.data![index].message!,
-                              isComing: snapshot.data![index].senderId !=
-                              profileController.currentUser.value.id,
-                              imageUrl: snapshot.data![index].imageUrl ?? '',
-                              status: 'offline',
-                              time: formattedTime,
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return Center(child: Text('No messages yet.'));
+                          } else {
+                            return ListView.builder(
+                              reverse: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                DateTime timestamp = DateTime.parse(
+                                  snapshot.data![index].timestamp!,
+                                );
+                                String formattedTime = DateFormat(
+                                  'hh:mm a',
+                                ).format(timestamp);
+                                return ChatBubbles(
+                                  key: ValueKey(snapshot.data![index].id),
+                                  message: snapshot.data![index].message!,
+                                  isComing:
+                                      snapshot.data![index].senderId !=
+                                      profileController.currentUser.value.id,
+                                  imageUrl:
+                                      snapshot.data![index].imageUrl ?? '',
+                                  status: 'offline',
+                                  time: formattedTime,
+                                );
+                              },
                             );
-                          },
-                        );
-                      }
-                    },
+                          }
+                        },
+                      ),
+                      Obx(
+                        () => (chatController.selectedImagePath.value != "")
+                            ? Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  height: 300,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primaryContainer,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 37,
-                      width: 38,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.mic_rounded,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: TextField(
-                        controller: messageController,
-                        decoration: InputDecoration(
-                          filled: false,
-                          hintText: 'Type a message',
-                          hintStyle: Theme.of(context).textTheme.labelLarge,
-                          contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      height: 37,
-                      width: 38,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.image_rounded,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 3),
-                    InkWell(
-                      onTap: () {
-                        if (messageController.text.isNotEmpty) {
-                          chatController.sendMessage(
-                            userModel.id!,
-                            messageController.text,
-                          );
-                          messageController.clear();
-                        }
-                      },
-                      child: Container(
-                        height: 37,
-                        width: 35,
-                        child: IconButton(
-                          onPressed: () {
-                            if (messageController.text.isNotEmpty) {
-                              chatController.sendMessage(
-                                userModel.id!,
-                                messageController.text,
-                              );
-                              messageController.clear();
-                            }
-                          },
-                          icon: Icon(
-                            Icons.send_rounded,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onPrimaryContainer,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                TypeMessage(userModel: userModel),
+              ],
+            ),
           ),
         ),
       ),

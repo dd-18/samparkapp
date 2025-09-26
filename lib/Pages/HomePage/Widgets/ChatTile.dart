@@ -19,6 +19,7 @@ class ChatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(5),
       height: 70,
       margin: EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
@@ -32,19 +33,28 @@ class ChatTile extends StatelessWidget {
           children: [
             Image.asset(imageUrl, width: 50),
             SizedBox(width: 12),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name, style: Theme.of(context).textTheme.bodyLarge),
-                SizedBox(height: 5),
-                Text(
-                  lastChat,
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    lastChat,
+                    style: Theme.of(context).textTheme.labelMedium,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
-            Spacer(),
+            SizedBox(width: 8),
             Text(lastTime, style: Theme.of(context).textTheme.labelMedium),
           ],
         ),
