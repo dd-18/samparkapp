@@ -16,91 +16,6 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ChatController chatController = Get.put(ChatController());
     TextEditingController messageController = TextEditingController();
-    // The input bar widget, extracted for clarity
-    Widget inputBar = Container(
-      margin: EdgeInsets.all(
-        10,
-      ), // You might want to adjust this margin/padding
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: Theme.of(context).colorScheme.primaryContainer,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 37,
-            width: 38,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.mic_rounded,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-              ),
-            ),
-          ),
-          SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              controller: messageController,
-              decoration: InputDecoration(
-                filled: false,
-                hintText: 'Type a message',
-                hintStyle: Theme.of(context).textTheme.labelLarge,
-                contentPadding: EdgeInsets.zero,
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-          SizedBox(width: 10),
-          Container(
-            height: 37,
-            width: 38,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.image_rounded,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-              ),
-            ),
-          ),
-          SizedBox(width: 3),
-          InkWell(
-            onTap: () {
-              if (messageController.text.isNotEmpty) {
-                chatController.sendMessage(
-                  userModel.id!,
-                  messageController.text,
-                );
-                messageController.clear();
-              }
-            },
-            child: Container(
-              height: 37,
-              width: 35,
-              child: IconButton(
-                onPressed: () {
-                  if (messageController.text.isNotEmpty) {
-                    chatController.sendMessage(
-                      userModel.id!,
-                      messageController.text,
-                    );
-                    messageController.clear();
-                  }
-                },
-                icon: Icon(
-                  Icons.send_rounded,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -124,11 +39,7 @@ class ChatPage extends StatelessWidget {
             IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
           ],
         ),
-        // Remove floatingActionButtonLocation and floatingActionButton
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        // floatingActionButton: previouslyYourInputBar,
         body: SafeArea(
-          // This inner SafeArea might be adjusted based on needs
           child: Column(
             children: [
               Expanded(
@@ -168,7 +79,93 @@ class ChatPage extends StatelessWidget {
                   ),
                 ),
               ),
-              inputBar, // Add the input bar at the bottom of the Column
+              Container(
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 37,
+                      width: 38,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.mic_rounded,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: TextField(
+                        controller: messageController,
+                        decoration: InputDecoration(
+                          filled: false,
+                          hintText: 'Type a message',
+                          hintStyle: Theme.of(context).textTheme.labelLarge,
+                          contentPadding: EdgeInsets.zero,
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      height: 37,
+                      width: 38,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.image_rounded,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 3),
+                    InkWell(
+                      onTap: () {
+                        if (messageController.text.isNotEmpty) {
+                          chatController.sendMessage(
+                            userModel.id!,
+                            messageController.text,
+                          );
+                          messageController.clear();
+                        }
+                      },
+                      child: Container(
+                        height: 37,
+                        width: 35,
+                        child: IconButton(
+                          onPressed: () {
+                            if (messageController.text.isNotEmpty) {
+                              chatController.sendMessage(
+                                userModel.id!,
+                                messageController.text,
+                              );
+                              messageController.clear();
+                            }
+                          },
+                          icon: Icon(
+                            Icons.send_rounded,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
