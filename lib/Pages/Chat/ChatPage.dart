@@ -5,6 +5,7 @@ import 'package:samparkapp/Config/Images.dart';
 import 'package:samparkapp/Models/UserModel.dart';
 
 import '../../Controller/ChatController.dart';
+import '../../Controller/ProfileController.dart';
 import '../../Models/ChatModel.dart';
 import 'Widgets/ChatBubbles.dart';
 
@@ -16,6 +17,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ChatController chatController = Get.put(ChatController());
     TextEditingController messageController = TextEditingController();
+    ProfileController profileController = Get.put(ProfileController());
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -67,7 +69,8 @@ class ChatPage extends StatelessWidget {
                             ).format(timestamp);
                             return ChatBubbles(
                               message: snapshot.data![index].message!,
-                              isComing: true,
+                              isComing: snapshot.data![index].senderId !=
+                              profileController.currentUser.value.id,
                               imageUrl: snapshot.data![index].imageUrl ?? '',
                               status: 'offline',
                               time: formattedTime,
