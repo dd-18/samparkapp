@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -46,16 +47,18 @@ class ChatBubbles extends StatelessWidget {
                 bottomRight: Radius.circular(0),
               ),
             ),
-            child: imageUrl == ""
+            child: imageUrl == "" || imageUrl.isEmpty
                 ? Text(message)
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                          child: Image.network(imageUrl)),
-                      SizedBox(height: 5),
-                      Text(message),
+                          child: Image.file(File(imageUrl))),
+                      if (message.isNotEmpty) ...[
+                        SizedBox(height: 5),
+                        Text(message),
+                      ]
                     ],
                   ),
           ),

@@ -59,27 +59,27 @@ class TypeMessage extends StatelessWidget {
               ),
             ),
             SizedBox(width: 10),
-            InkWell(
-              onTap: () async {
-                chatController.selectedImagePath.value =
-                    (await imagePickerController.pickImage())!;
-                messageController.clear();
-              },
-              child: Container(
-                height: 37,
-                width: 38,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.image_rounded,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
+            Container(
+              height: 37,
+              width: 38,
+              child: IconButton(
+                onPressed: () async {
+                  String? pickedPath = await imagePickerController.pickImage();
+                  if (pickedPath != null && pickedPath.isNotEmpty) {
+                    chatController.selectedImagePath.value = pickedPath;
+                  }
+                },
+                icon: Icon(
+                  Icons.image_rounded,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),
             ),
             SizedBox(width: 3),
             Obx(
-              () => message.value == ""
+              () =>
+                  (message.value == "" &&
+                      chatController.selectedImagePath.value == "")
                   ? Container(
                       height: 37,
                       width: 38,
@@ -98,12 +98,28 @@ class TypeMessage extends StatelessWidget {
                       width: 35,
                       child: IconButton(
                         onPressed: () {
-                          if (messageController.text.isNotEmpty) {
+                          String currentMessageText = messageController.text;
+                          String currentSelectedImagePath =
+                              chatController.selectedImagePath.value;
+
+                          if (currentSelectedImagePath.isNotEmpty) {
+                            chatController.sendImage(
+                              userModel.id!,
+                              currentSelectedImagePath,
+                              userModel,
+                              currentMessageText,
+                            );
+                          } else if (currentMessageText.isNotEmpty) {
                             chatController.sendMessage(
                               userModel.id!,
-                              messageController.text,
+                              currentMessageText,
                               userModel,
                             );
+                          }
+
+                          if (currentSelectedImagePath.isNotEmpty ||
+                              currentMessageText.isNotEmpty) {
+                            chatController.selectedImagePath.value = "";
                             messageController.clear();
                             message.value = "";
                           }

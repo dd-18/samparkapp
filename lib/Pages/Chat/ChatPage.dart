@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +19,6 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ChatController chatController = Get.put(ChatController());
-    TextEditingController messageController = TextEditingController();
     ProfileController profileController = Get.put(ProfileController());
     return SafeArea(
       child: Scaffold(
@@ -125,11 +125,42 @@ class ChatPage extends StatelessWidget {
                                 right: 0,
                                 child: Container(
                                   height: 300,
+                                  margin: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.primaryContainer,
                                     borderRadius: BorderRadius.circular(20),
+                                    image: DecorationImage(
+                                      image: FileImage(
+                                        File(
+                                          chatController
+                                              .selectedImagePath
+                                              .value,
+                                        ),
+                                      ),
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        top: -5,
+                                        right: -5,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.close,
+                                            color: Colors.redAccent,
+                                          ),
+                                          onPressed: () {
+                                            chatController
+                                                    .selectedImagePath
+                                                    .value =
+                                                "";
+                                          },
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               )
