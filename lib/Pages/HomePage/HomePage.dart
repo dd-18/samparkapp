@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:samparkapp/Controller/ContactController.dart';
+import 'package:samparkapp/Pages/Groups/GroupsPage.dart';
 import 'package:samparkapp/Pages/HomePage/Widgets/ChatList.dart';
 import 'package:samparkapp/Pages/HomePage/Widgets/TabBar.dart';
 
@@ -71,7 +72,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             controller: tabController,
             children: [
               ChatList(),
-              ListView(children: [ListTile(title: Text("data"))]),
+              GroupsPage(),
               ListView(children: [ListTile(title: Text("data"))]),
             ],
           ),

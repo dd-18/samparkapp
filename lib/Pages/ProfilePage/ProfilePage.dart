@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../Controller/AuthController.dart';
 import '../../Controller/ImagePickerController.dart';
@@ -73,10 +74,11 @@ class ProfilePage extends StatelessWidget {
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          // Assign directly to Rxn<String>.value
                                           imagePath.value =
                                               await imagePickerController
-                                                  .pickImage();
+                                                  .pickImage(
+                                                    ImageSource.gallery,
+                                                  );
                                         },
                                         child: CircleAvatar(
                                           radius: 80,

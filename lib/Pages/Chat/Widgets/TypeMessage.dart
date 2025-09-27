@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../Controller/ChatController.dart';
 import '../../../Controller/ImagePickerController.dart';
@@ -17,10 +18,9 @@ class TypeMessage extends StatelessWidget {
       ImagePickerController(),
     );
     RxString message = ''.obs;
-    return Padding(
-      padding: const EdgeInsets.all(10),
+    return SafeArea(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+        padding: EdgeInsets.symmetric(vertical: 3, horizontal: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: Theme.of(context).colorScheme.primaryContainer,
@@ -34,7 +34,8 @@ class TypeMessage extends StatelessWidget {
                 height: 37,
                 width: 38,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                  },
                   icon: Icon(
                     Icons.emoji_emotions_outlined,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -63,14 +64,114 @@ class TypeMessage extends StatelessWidget {
               height: 37,
               width: 38,
               child: IconButton(
-                onPressed: () async {
-                  String? pickedPath = await imagePickerController.pickImage();
-                  if (pickedPath != null && pickedPath.isNotEmpty) {
-                    chatController.selectedImagePath.value = pickedPath;
-                  }
+                onPressed: () {
+                  Get.bottomSheet(
+                    SafeArea(
+                      child: Container(
+                        height: 120,
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                String? pickedPath = await imagePickerController
+                                    .pickImage(ImageSource.camera);
+                                if (pickedPath != null &&
+                                    pickedPath.isNotEmpty) {
+                                  chatController.selectedImagePath.value =
+                                      pickedPath;
+                                }
+                                Get.back();
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.primaryContainer,
+                                ),
+                                child: Icon(
+                                  Icons.camera_alt_rounded,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimaryContainer,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                Get.back();
+                                String? pickedPath = await imagePickerController
+                                    .pickImage(ImageSource.gallery);
+                                if (pickedPath != null &&
+                                    pickedPath.isNotEmpty) {
+                                  chatController.selectedImagePath.value =
+                                      pickedPath;
+                                }
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.primaryContainer,
+                                ),
+                                child: Icon(
+                                  Icons.photo_library_rounded,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimaryContainer,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                                Get.snackbar(
+                                  "Info",
+                                  "Video selection not implemented yet.",
+                                  backgroundColor: Colors.red,
+                                );
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.primaryContainer,
+                                ),
+                                child: Icon(
+                                  Icons.video_collection_rounded,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimaryContainer,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                  );
                 },
                 icon: Icon(
-                  Icons.image_rounded,
+                  Icons.attachment_rounded,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),
@@ -84,7 +185,8 @@ class TypeMessage extends StatelessWidget {
                       height: 37,
                       width: 38,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                        },
                         icon: Icon(
                           Icons.mic_rounded,
                           color: Theme.of(

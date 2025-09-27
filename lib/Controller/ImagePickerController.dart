@@ -4,9 +4,9 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerController extends GetxController {
   final ImagePicker picker = ImagePicker();
 
-  Future<String?> pickImage() async {
+  Future<String?> pickImage(ImageSource source) async {
     try {
-      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      final XFile? image = await picker.pickImage(source: source);
       if (image != null) {
         return image.path;
       } else {
